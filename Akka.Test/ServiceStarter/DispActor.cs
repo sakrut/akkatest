@@ -18,10 +18,14 @@ namespace ServiceStarter
 
         private bool onSomoneEdit(EditFileMessage arg)
         {
-            var actorRef = childs[getFileName(arg)];
-            if (actorRef == null)
+            IActorRef actorRef = null;
+            if (!childs.ContainsKey(getFileName(arg)))
             {
                 childs[getFileName(arg)] = actorRef = Context.ActorOf(Props.Create(() => new FileEditActor()));
+            }
+            else
+            {
+                actorRef =childs[getFileName(arg)] ;
             }
             actorRef.Tell(arg,Sender);
             return true;
@@ -29,7 +33,7 @@ namespace ServiceStarter
 
         public string getFileName(EditFileMessage e)
         {
-            return e.FileSystemEventArgs.Name.Replace("\\", "_");
+            return e.Name.Replace("\\", "_");
         }
     }
 }

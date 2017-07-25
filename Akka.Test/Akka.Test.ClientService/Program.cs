@@ -14,16 +14,25 @@ namespace Akka.Test.ClientService
         static void Main(string[] args)
         {
             var config = ConfigurationFactory.ParseString(@"
-            akka.remote.helios.tcp {
+            akka{
+actor {
+        provider = ""Akka.Remote.RemoteActorRefProvider, Akka.Remote""
+    }
+        remote{
+ helios.tcp 
+{
                           transport-class =
                        ""Akka.Remote.Transport.Helios.HeliosTcpTransport, Akka.Remote""
                           transport-protocol = tcp
                           port = 0
-                          hostname = ""pswintst""
-                      }");
+                          hostname = ""localhost""
+                      }
+}
+}
+");
             using (var fileEditChekerSystem = ActorSystem.Create("fileEditCheker", config))
             {
-                var akkaTcpFileeditchekerPswintst = "akka.tcp://fileEditCheker@pswintst:8091";
+                var akkaTcpFileeditchekerPswintst = "akka.tcp://fileEditCheker@192.168.15.19:8081";
                 var remoteAddress = Address.Parse(akkaTcpFileeditchekerPswintst);
 
 

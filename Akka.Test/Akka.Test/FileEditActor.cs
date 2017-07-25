@@ -23,7 +23,7 @@ namespace Akka.Test
             {
                 if (editFileMessage.Key != Sender)
                 {
-                    editFileMessage.Key.Tell(new OrderPeopleChangeFile(arg.FileSystemEventArgs.Name,arg.UserName));
+                    editFileMessage.Key.Tell(new OrderPeopleChangeFile(arg.Name,arg.UserName));
                 }
             }
             return true;

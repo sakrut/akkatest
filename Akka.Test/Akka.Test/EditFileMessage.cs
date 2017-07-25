@@ -9,12 +9,20 @@ namespace Akka.Test
 {
     public class EditFileMessage
     {
-        public FileSystemEventArgs FileSystemEventArgs { get; set; }
+        public string Name { get; set; }
+        public string FullPath { get; set; }
+        public WatcherChangeTypes ChangeType { get; set; }
         public string UserName { get; set; }
+
+        public EditFileMessage()
+        {
+        }
 
         public EditFileMessage(FileSystemEventArgs fileSystemEventArgs, string userName)
         {
-            FileSystemEventArgs = fileSystemEventArgs;
+            Name = fileSystemEventArgs.Name;
+            FullPath= fileSystemEventArgs.FullPath;
+            ChangeType = fileSystemEventArgs.ChangeType;
             UserName = userName;
         }
     }
