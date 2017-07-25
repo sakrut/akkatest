@@ -32,7 +32,7 @@ actor {
 ");
             using (var fileEditChekerSystem = ActorSystem.Create("fileEditCheker", config))
             {
-                var akkaTcpFileeditchekerPswintst = "akka.tcp://fileEditCheker@192.168.15.19:8081";
+                var akkaTcpFileeditchekerPswintst = "akka.tcp://fileEditCheker@pswintst:8081";
                 var remoteAddress = Address.Parse(akkaTcpFileeditchekerPswintst);
 
 

@@ -52,7 +52,7 @@ actor {
                        ""Akka.Remote.Transport.Helios.HeliosTcpTransport, Akka.Remote""
                           transport-protocol = tcp
                           port = 8081
-                          hostname = ""192.168.15.19""
+                          hostname = ""pswintst""
                       }
 }
 }
