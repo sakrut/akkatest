@@ -21,7 +21,7 @@ namespace Akka.Test
             lastEdit[Sender] = arg;
             foreach (var editFileMessage in lastEdit)
             {
-                if (editFileMessage.Key != Sender)
+                if (editFileMessage.Key.Path != Sender.Path)
                 {
                     editFileMessage.Key.Tell(new OrderPeopleChangeFile(arg.Name,arg.UserName));
                 }
