@@ -37,6 +37,14 @@
       <HintPath>..\packages\Akka.1.2.3\lib\net45\Akka.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Akka.Monitoring, Version=0.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Akka.Monitoring.0.5.3\lib\net45\Akka.Monitoring.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Akka.Monitoring.PerformanceCounters, Version=0.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Akka.Monitoring.PerformanceCounters.0.5.3\lib\net45\Akka.Monitoring.PerformanceCounters.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Akka.Remote, Version=1.2.3.41, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Akka.Remote.1.2.3\lib\net45\Akka.Remote.dll</HintPath>
       <Private>True</Private>

@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Configuration;
+using Akka.Monitoring;
+using Akka.Monitoring.PerformanceCounters;
 using Topshelf;
 
 namespace Akka.Test.ClientService
 {
     class Program
     {
+        private static bool registeredMonitor;
+
         static void Main(string[] args)
         {
             var config = ConfigurationFactory.ParseString(@"
@@ -32,6 +36,7 @@ actor {
 ");
             using (var fileEditChekerSystem = ActorSystem.Create("fileEditCheker", config))
             {
+                registeredMonitor = ActorMonitoringExtension.RegisterMonitor(fileEditChekerSystem, new ActorPerformanceCountersMonitor());
                 var akkaTcpFileeditchekerPswintst = "akka.tcp://fileEditCheker@pswintst:8081";
                 var remoteAddress = Address.Parse(akkaTcpFileeditchekerPswintst);
 

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Akka.Actor;
 using Akka.Configuration;
+using Akka.Monitoring;
+using Akka.Monitoring.PerformanceCounters;
 using Topshelf;
 
 namespace ServiceStarter
@@ -37,6 +39,7 @@ namespace ServiceStarter
     public class MyActorService : IDisposable
     {
         private ActorSystem fileEditChekerSystem;
+        private bool registeredMonitor;
 
         public void Start()
         {
@@ -58,6 +61,7 @@ actor {
 }
 ");
             fileEditChekerSystem = ActorSystem.Create("fileEditCheker", config);
+            registeredMonitor = ActorMonitoringExtension.RegisterMonitor(fileEditChekerSystem, new ActorPerformanceCountersMonitor());
             fileEditChekerSystem.ActorOf(Props.Create(() => new DispActor()), "disp");
         }
 
