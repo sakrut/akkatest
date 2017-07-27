@@ -15,7 +15,7 @@ namespace ServiceStarter
     {
         static void Main(string[] args)
         {
-            /* HostFactory.Run(x =>
+             HostFactory.Run(x =>
              {
                  x.Service<MyActorService>(s =>
                  {
@@ -27,12 +27,12 @@ namespace ServiceStarter
 
                  x.RunAsLocalSystem();
                  x.UseAssemblyInfoForServiceInfo();
-             });*/
-            using (var myActorService = new MyActorService())
+             });
+            /*using (var myActorService = new MyActorService())
             {
                 myActorService.Start();
                 Console.ReadKey();
-            }
+            }*/
         }
     }
 
@@ -43,23 +43,7 @@ namespace ServiceStarter
 
         public void Start()
         {
-            var config = ConfigurationFactory.ParseString(@"
-            akka{
-actor {
-        provider = ""Akka.Remote.RemoteActorRefProvider, Akka.Remote""
-    }
-        remote{
- helios.tcp 
-{
-                          transport-class =
-                       ""Akka.Remote.Transport.Helios.HeliosTcpTransport, Akka.Remote""
-                          transport-protocol = tcp
-                          port = 8081
-                          hostname = ""pswintst""
-                      }
-}
-}
-");
+            var config = ConfigurationFactory.ParseString(ServiceStarter.Properties.Resources.akkaconfig);
             fileEditChekerSystem = ActorSystem.Create("fileEditCheker", config);
             registeredMonitor = ActorMonitoringExtension.RegisterMonitor(fileEditChekerSystem, new ActorPerformanceCountersMonitor());
             fileEditChekerSystem.ActorOf(Props.Create(() => new DispActor()), "disp");

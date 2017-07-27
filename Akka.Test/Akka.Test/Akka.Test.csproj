@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileEditActor.cs" />
     <Compile Include="EditFileMessage.cs" />
     <Compile Include="OrderPeopleChangeFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -19,13 +19,14 @@ namespace ServiceStarter
         private bool onSomoneEdit(EditFileMessage arg)
         {
             IActorRef actorRef = null;
-            if (!childs.ContainsKey(getFileName(arg)))
+            var key = getFileName(arg);
+            if (!childs.ContainsKey(key))
             {
-                childs[getFileName(arg)] = actorRef = Context.ActorOf(Props.Create(() => new FileEditActor()));
+                childs[key] = actorRef = Context.ActorOf(Props.Create(() => new FileEditActor(key)));
             }
             else
             {
-                actorRef =childs[getFileName(arg)] ;
+                actorRef =childs[key] ;
             }
             actorRef.Tell(arg,Sender);
             return true;
