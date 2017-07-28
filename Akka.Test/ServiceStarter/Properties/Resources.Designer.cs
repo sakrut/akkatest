@@ -59,28 +59,5 @@ namespace ServiceStarter.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to akka {
-        ///  actor {
-        ///    provider = &quot;Akka.Remote.RemoteActorRefProvider, Akka.Remote&quot;
-        ///  }
-        ///  remote {
-        ///    helios.tcp {
-        ///      transport-class = &quot;Akka.Remote.Transport.Helios.HeliosTcpTransport, Akka.Remote&quot; 
-        ///      transport-protocol = tcp
-        ///      port = 8081 
-        ///      hostname= &quot;pswintst&quot;
-        ///    }
-        ///  }
-        ///
-        ///}
-        ///.
-        /// </summary>
-        internal static string akkaconfig {
-            get {
-                return ResourceManager.GetString("akkaconfig", resourceCulture);
-            }
-        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,8 @@ using Akka.Actor;
 using Akka.Configuration;
 using Akka.Monitoring;
 using Akka.Monitoring.PerformanceCounters;
+using Akka.Persistence.SqlServer;
+using Akka.Test;
 using Topshelf;
 
 namespace ServiceStarter
@@ -15,7 +18,7 @@ namespace ServiceStarter
     {
         static void Main(string[] args)
         {
-             HostFactory.Run(x =>
+             /*HostFactory.Run(x =>
              {
                  x.Service<MyActorService>(s =>
                  {
@@ -27,12 +30,12 @@ namespace ServiceStarter
 
                  x.RunAsLocalSystem();
                  x.UseAssemblyInfoForServiceInfo();
-             });
-            /*using (var myActorService = new MyActorService())
+             });*/
+            using (var myActorService = new MyActorService())
             {
                 myActorService.Start();
                 Console.ReadKey();
-            }*/
+            }
         }
     }
 
@@ -40,13 +43,18 @@ namespace ServiceStarter
     {
         private ActorSystem fileEditChekerSystem;
         private bool registeredMonitor;
+        private SqlServerPersistence sqlServerPersistence;
 
         public void Start()
         {
-            var config = ConfigurationFactory.ParseString(ServiceStarter.Properties.Resources.akkaconfig);
-            fileEditChekerSystem = ActorSystem.Create("fileEditCheker", config);
+            //var config = ConfigurationFactory.ParseString(ServiceStarter.Properties.Resources.akkaconfig);
+            
+            fileEditChekerSystem = ActorSystem.Create("fileEditCheker");
+            sqlServerPersistence = SqlServerPersistence.Get(fileEditChekerSystem);
+            
             registeredMonitor = ActorMonitoringExtension.RegisterMonitor(fileEditChekerSystem, new ActorPerformanceCountersMonitor());
-            fileEditChekerSystem.ActorOf(Props.Create(() => new DispActor()), "disp");
+            var actorRef = fileEditChekerSystem.ActorOf(Props.Create(() => new DispActor()), "disp");
+            actorRef.Tell(new EditFileMessage() {Name = "ttttt",UserName = "Testoowy",FullPath = "ss",ChangeType = WatcherChangeTypes.Changed});
         }
 
         public async void Stop()
